@@ -1,63 +1,31 @@
-import { Tabs } from 'expo-router';
-import { Chrome as Home, Camera, Image, Settings } from 'lucide-react-native';
+import { NativeTabs, Icon, Label } from "expo-router/unstable-native-tabs";
+import { DynamicColorIOS } from "react-native";
 
 export default function TabLayout() {
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: {
-          backgroundColor: '#ffffff',
-          borderTopWidth: 1,
-          borderTopColor: '#f0f0f0',
-          paddingBottom: 8,
-          paddingTop: 8,
-          height: 80,
-        },
-        tabBarActiveTintColor: '#ff6b6b',
-        tabBarInactiveTintColor: '#9ca3af',
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '600',
-          marginTop: 4,
-        },
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'ホーム',
-          tabBarIcon: ({ size, color }) => (
-            <Home size={size} color={color} strokeWidth={2} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="camera"
-        options={{
-          title: '撮影',
-          tabBarIcon: ({ size, color }) => (
-            <Camera size={size} color={color} strokeWidth={2} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="gallery"
-        options={{
-          title: 'ギャラリー',
-          tabBarIcon: ({ size, color }) => (
-            <Image size={size} color={color} strokeWidth={2} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="settings"
-        options={{
-          title: '設定',
-          tabBarIcon: ({ size, color }) => (
-            <Settings size={size} color={color} strokeWidth={2} />
-          ),
-        }}
-      />
-    </Tabs>
+    <NativeTabs
+      blurEffect="systemChromeMaterial"
+      tintColor='#ff6b6b'
+    >
+      <NativeTabs.Trigger name="index">
+        <Icon sf={{ default: "house", selected: "house.fill" }} />
+        <Label>ホーム</Label>
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="camera">
+        <Icon sf={{ default: "camera", selected: "camera.fill" }} />
+        <Label>撮影</Label>
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="gallery">
+        <Icon sf={{ default: "camera", selected: "camera.fill" }} />
+        <Label>ギャラリー</Label>
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="settings">
+        <Icon sf={{ default: "gearshape", selected: "gearshape.fill" }} />
+        <Label>設定</Label>
+      </NativeTabs.Trigger>
+    </NativeTabs>
   );
 }
