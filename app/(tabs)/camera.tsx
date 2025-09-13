@@ -9,12 +9,12 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
-import { 
-  Camera as CameraIcon, 
-  RotateCcw, 
-  X, 
+import {
+  Camera as CameraIcon,
+  RotateCcw,
+  X,
   Timer,
-  Heart 
+  Heart,
 } from 'lucide-react-native';
 
 export default function CameraScreen() {
@@ -27,10 +27,10 @@ export default function CameraScreen() {
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
-    
+
     if (isActive && timeLeft > 0) {
       interval = setInterval(() => {
-        setTimeLeft(prev => prev - 1);
+        setTimeLeft((prev) => prev - 1);
       }, 1000);
     } else if (timeLeft === 0) {
       setIsActive(false);
@@ -54,9 +54,9 @@ export default function CameraScreen() {
           duration: 1000,
           useNativeDriver: true,
         }),
-      ])
+      ]),
     );
-    
+
     if (isActive) {
       pulse.start();
     } else {
@@ -86,7 +86,10 @@ export default function CameraScreen() {
           <Text style={styles.permissionMessage}>
             大切な瞬間を記録するために{'\n'}カメラの使用を許可してください
           </Text>
-          <TouchableOpacity style={styles.permissionButton} onPress={requestPermission}>
+          <TouchableOpacity
+            style={styles.permissionButton}
+            onPress={requestPermission}
+          >
             <Text style={styles.permissionButtonText}>許可する</Text>
           </TouchableOpacity>
         </View>
@@ -118,7 +121,7 @@ export default function CameraScreen() {
   };
 
   const toggleCameraFacing = () => {
-    setFacing(current => (current === 'back' ? 'front' : 'back'));
+    setFacing((current) => (current === 'back' ? 'front' : 'back'));
   };
 
   return (
@@ -140,7 +143,7 @@ export default function CameraScreen() {
         <View style={styles.cameraContainer}>
           {/* Timer Header */}
           <View style={styles.timerHeader}>
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.closeButton}
               onPress={() => setIsActive(false)}
             >
@@ -157,19 +160,27 @@ export default function CameraScreen() {
           <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
             <View style={styles.cameraOverlay}>
               <View style={styles.cameraControls}>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={styles.flipButton}
                   onPress={toggleCameraFacing}
                 >
                   <RotateCcw size={24} color="#ffffff" strokeWidth={2} />
                 </TouchableOpacity>
-                
-                <Animated.View style={[styles.captureButtonContainer, { transform: [{ scale: pulseAnim }] }]}>
-                  <TouchableOpacity style={styles.captureButton} onPress={takePicture}>
+
+                <Animated.View
+                  style={[
+                    styles.captureButtonContainer,
+                    { transform: [{ scale: pulseAnim }] },
+                  ]}
+                >
+                  <TouchableOpacity
+                    style={styles.captureButton}
+                    onPress={takePicture}
+                  >
                     <View style={styles.captureButtonInner} />
                   </TouchableOpacity>
                 </Animated.View>
-                
+
                 <View style={styles.placeholder} />
               </View>
             </View>

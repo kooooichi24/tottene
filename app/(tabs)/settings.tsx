@@ -44,15 +44,15 @@ export default function SettingsScreen() {
       'すべての写真と設定が削除されます。この操作は取り消せません。',
       [
         { text: 'キャンセル', style: 'cancel' },
-        { 
-          text: '削除', 
+        {
+          text: '削除',
           style: 'destructive',
           onPress: () => {
             // In real app, this would clear local storage
             Alert.alert('完了', 'データが削除されました。');
-          }
+          },
         },
-      ]
+      ],
     );
   };
 
@@ -125,9 +125,7 @@ export default function SettingsScreen() {
       disabled={item.type === 'info'}
     >
       <View style={styles.settingLeft}>
-        <View style={styles.iconContainer}>
-          {item.icon}
-        </View>
+        <View style={styles.iconContainer}>{item.icon}</View>
         <View style={styles.textContainer}>
           <Text style={styles.settingTitle}>{item.title}</Text>
           {item.subtitle && (
@@ -135,7 +133,7 @@ export default function SettingsScreen() {
           )}
         </View>
       </View>
-      
+
       <View style={styles.settingRight}>
         {item.type === 'toggle' && (
           <Switch
@@ -154,7 +152,10 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Header */}
         <View style={styles.header}>
           <View style={styles.titleContainer}>

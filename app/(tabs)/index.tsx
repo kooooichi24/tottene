@@ -37,16 +37,19 @@ export default function HomeScreen() {
   ]);
 
   const toggleNotification = (id: string) => {
-    setNotifications(prev =>
-      prev.map(notif =>
-        notif.id === id ? { ...notif, enabled: !notif.enabled } : notif
-      )
+    setNotifications((prev) =>
+      prev.map((notif) =>
+        notif.id === id ? { ...notif, enabled: !notif.enabled } : notif,
+      ),
     );
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Header */}
         <View style={styles.header}>
           <View style={styles.titleContainer}>
@@ -103,7 +106,9 @@ export default function HomeScreen() {
                     </View>
                   ))}
                 </View>
-                <Text style={styles.frequencyText}>{notification.frequency}</Text>
+                <Text style={styles.frequencyText}>
+                  {notification.frequency}
+                </Text>
               </View>
             </View>
           ))}
@@ -120,8 +125,12 @@ export default function HomeScreen() {
             <Calendar size={20} color="#374151" strokeWidth={2} />
             <Text style={styles.sectionTitle}>最近の写真</Text>
           </View>
-          
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.recentPhotos}>
+
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.recentPhotos}
+          >
             {[1, 2, 3, 4, 5].map((item) => (
               <View key={item} style={styles.photoPreview}>
                 <View style={styles.photoPlaceholder}>

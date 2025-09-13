@@ -10,14 +10,14 @@ import {
   Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { 
-  Image as ImageIcon, 
-  Download, 
-  X, 
+import {
+  Image as ImageIcon,
+  Download,
+  X,
   Calendar,
   Heart,
   ChevronLeft,
-  ChevronRight 
+  ChevronRight,
 } from 'lucide-react-native';
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -32,15 +32,45 @@ interface Photo {
 export default function AlbumScreen() {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  
+
   // Mock data - in real app this would come from local storage
   const photos: Photo[] = [
-    { id: '1', uri: 'https://images.pexels.com/photos/1257110/pexels-photo-1257110.jpeg', date: '2024/12/25', timestamp: Date.now() },
-    { id: '2', uri: 'https://images.pexels.com/photos/1648377/pexels-photo-1648377.jpeg', date: '2024/12/24', timestamp: Date.now() - 86400000 },
-    { id: '3', uri: 'https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg', date: '2024/12/23', timestamp: Date.now() - 172800000 },
-    { id: '4', uri: 'https://images.pexels.com/photos/1648375/pexels-photo-1648375.jpeg', date: '2024/12/22', timestamp: Date.now() - 259200000 },
-    { id: '5', uri: 'https://images.pexels.com/photos/1648378/pexels-photo-1648378.jpeg', date: '2024/12/21', timestamp: Date.now() - 345600000 },
-    { id: '6', uri: 'https://images.pexels.com/photos/1648374/pexels-photo-1648374.jpeg', date: '2024/12/20', timestamp: Date.now() - 432000000 },
+    {
+      id: '1',
+      uri: 'https://images.pexels.com/photos/1257110/pexels-photo-1257110.jpeg',
+      date: '2024/12/25',
+      timestamp: Date.now(),
+    },
+    {
+      id: '2',
+      uri: 'https://images.pexels.com/photos/1648377/pexels-photo-1648377.jpeg',
+      date: '2024/12/24',
+      timestamp: Date.now() - 86400000,
+    },
+    {
+      id: '3',
+      uri: 'https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg',
+      date: '2024/12/23',
+      timestamp: Date.now() - 172800000,
+    },
+    {
+      id: '4',
+      uri: 'https://images.pexels.com/photos/1648375/pexels-photo-1648375.jpeg',
+      date: '2024/12/22',
+      timestamp: Date.now() - 259200000,
+    },
+    {
+      id: '5',
+      uri: 'https://images.pexels.com/photos/1648378/pexels-photo-1648378.jpeg',
+      date: '2024/12/21',
+      timestamp: Date.now() - 345600000,
+    },
+    {
+      id: '6',
+      uri: 'https://images.pexels.com/photos/1648374/pexels-photo-1648374.jpeg',
+      date: '2024/12/20',
+      timestamp: Date.now() - 432000000,
+    },
   ];
 
   const openPhoto = (photo: Photo, index: number) => {
@@ -53,10 +83,11 @@ export default function AlbumScreen() {
   };
 
   const navigatePhoto = (direction: 'prev' | 'next') => {
-    const newIndex = direction === 'prev' 
-      ? Math.max(0, selectedIndex - 1)
-      : Math.min(photos.length - 1, selectedIndex + 1);
-    
+    const newIndex =
+      direction === 'prev'
+        ? Math.max(0, selectedIndex - 1)
+        : Math.min(photos.length - 1, selectedIndex + 1);
+
     setSelectedIndex(newIndex);
     setSelectedPhoto(photos[newIndex]);
   };
@@ -67,7 +98,7 @@ export default function AlbumScreen() {
   };
 
   const renderPhoto = ({ item, index }: { item: Photo; index: number }) => (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={styles.photoItem}
       onPress={() => openPhoto(item, index)}
     >
@@ -87,7 +118,7 @@ export default function AlbumScreen() {
             <Text style={styles.title}>ギャラリー</Text>
           </View>
         </View>
-        
+
         <View style={styles.emptyContainer}>
           <Heart size={64} color="#d1d5db" strokeWidth={1} />
           <Text style={styles.emptyTitle}>まだ写真がありません</Text>
@@ -141,24 +172,46 @@ export default function AlbumScreen() {
 
           {selectedPhoto && (
             <View style={styles.imageContainer}>
-              <Image source={{ uri: selectedPhoto.uri }} style={styles.fullImage} />
-              
+              <Image
+                source={{ uri: selectedPhoto.uri }}
+                style={styles.fullImage}
+              />
+
               {/* Navigation */}
               <View style={styles.navigationContainer}>
-                <TouchableOpacity 
-                  style={[styles.navButton, selectedIndex === 0 && styles.navButtonDisabled]}
+                <TouchableOpacity
+                  style={[
+                    styles.navButton,
+                    selectedIndex === 0 && styles.navButtonDisabled,
+                  ]}
                   onPress={() => navigatePhoto('prev')}
                   disabled={selectedIndex === 0}
                 >
-                  <ChevronLeft size={24} color={selectedIndex === 0 ? '#9ca3af' : '#ffffff'} strokeWidth={2} />
+                  <ChevronLeft
+                    size={24}
+                    color={selectedIndex === 0 ? '#9ca3af' : '#ffffff'}
+                    strokeWidth={2}
+                  />
                 </TouchableOpacity>
-                
-                <TouchableOpacity 
-                  style={[styles.navButton, selectedIndex === photos.length - 1 && styles.navButtonDisabled]}
+
+                <TouchableOpacity
+                  style={[
+                    styles.navButton,
+                    selectedIndex === photos.length - 1 &&
+                      styles.navButtonDisabled,
+                  ]}
                   onPress={() => navigatePhoto('next')}
                   disabled={selectedIndex === photos.length - 1}
                 >
-                  <ChevronRight size={24} color={selectedIndex === photos.length - 1 ? '#9ca3af' : '#ffffff'} strokeWidth={2} />
+                  <ChevronRight
+                    size={24}
+                    color={
+                      selectedIndex === photos.length - 1
+                        ? '#9ca3af'
+                        : '#ffffff'
+                    }
+                    strokeWidth={2}
+                  />
                 </TouchableOpacity>
               </View>
             </View>
