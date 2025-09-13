@@ -29,7 +29,7 @@ interface Photo {
   timestamp: number;
 }
 
-export default function GalleryScreen() {
+export default function AlbumScreen() {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   
@@ -104,7 +104,7 @@ export default function GalleryScreen() {
       <View style={styles.header}>
         <View style={styles.titleContainer}>
           <ImageIcon size={24} color="#ff6b6b" strokeWidth={2} />
-          <Text style={styles.title}>ギャラリー</Text>
+          <Text style={styles.title}>アルバム</Text>
         </View>
         <View style={styles.statsContainer}>
           <Calendar size={16} color="#6b7280" strokeWidth={2} />
