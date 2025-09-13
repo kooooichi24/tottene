@@ -18,7 +18,7 @@ export default function TabLayout() {
 
       <NativeTabs.Trigger name="gallery">
         <Icon sf={{ default: "photo.on.rectangle", selected: "photo.on.rectangle" }} />
-        <Label>ギャラリー</Label>
+        <Label>アルバム</Label>
       </NativeTabs.Trigger>
 
       <NativeTabs.Trigger name="settings">
