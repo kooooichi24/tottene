@@ -1,5 +1,4 @@
 import { NativeTabs, Icon, Label } from "expo-router/unstable-native-tabs";
-import { DynamicColorIOS } from "react-native";
 
 export default function TabLayout() {
   return (
