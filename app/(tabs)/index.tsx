@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { Bell, Plus, Clock, Calendar, Heart } from "lucide-react-native";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,9 +7,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Switch,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Bell, Plus, Clock, Calendar, Heart } from 'lucide-react-native';
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface NotificationTime {
   id: string;
@@ -21,17 +21,17 @@ interface NotificationTime {
 export default function HomeScreen() {
   const [notifications, setNotifications] = useState<NotificationTime[]>([
     {
-      id: '1',
-      time: '09:00',
-      days: ['月', '水', '金'],
-      frequency: '毎週',
+      id: "1",
+      time: "09:00",
+      days: ["月", "水", "金"],
+      frequency: "毎週",
       enabled: true,
     },
     {
-      id: '2',
-      time: '15:30',
-      days: ['土', '日'],
-      frequency: '毎週',
+      id: "2",
+      time: "15:30",
+      days: ["土", "日"],
+      frequency: "毎週",
       enabled: false,
     },
   ]);
@@ -94,8 +94,8 @@ export default function HomeScreen() {
                 <Switch
                   value={notification.enabled}
                   onValueChange={() => toggleNotification(notification.id)}
-                  trackColor={{ false: '#e5e7eb', true: '#fecaca' }}
-                  thumbColor={notification.enabled ? '#ff6b6b' : '#9ca3af'}
+                  trackColor={{ false: "#e5e7eb", true: "#fecaca" }}
+                  thumbColor={notification.enabled ? "#ff6b6b" : "#9ca3af"}
                 />
               </View>
               <View style={styles.notificationDetails}>
@@ -145,7 +145,7 @@ export default function HomeScreen() {
         {/* Motivational Message */}
         <View style={styles.motivationCard}>
           <Text style={styles.motivationText}>
-            今日も素敵な瞬間を{'\n'}記録しましょう ✨
+            今日も素敵な瞬間を{"\n"}記録しましょう ✨
           </Text>
         </View>
       </ScrollView>
@@ -156,7 +156,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: "#fafafa",
   },
   scrollView: {
     flex: 1,
@@ -166,56 +166,56 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 8,
   },
   title: {
     fontSize: 24,
-    fontWeight: '700',
-    color: '#1f2937',
+    fontWeight: "700",
+    color: "#1f2937",
     marginLeft: 12,
   },
   subtitle: {
     fontSize: 16,
-    color: '#6b7280',
-    fontWeight: '400',
+    color: "#6b7280",
+    fontWeight: "400",
   },
   statsCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
     marginHorizontal: 24,
     marginBottom: 24,
     borderRadius: 16,
     padding: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    shadowColor: '#000',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 8,
     elevation: 3,
   },
   statItem: {
-    alignItems: 'center',
+    alignItems: "center",
     flex: 1,
   },
   statNumber: {
     fontSize: 28,
-    fontWeight: '800',
-    color: '#ff6b6b',
+    fontWeight: "800",
+    color: "#ff6b6b",
     marginBottom: 4,
   },
   statLabel: {
     fontSize: 12,
-    color: '#6b7280',
-    fontWeight: '500',
-    textAlign: 'center',
+    color: "#6b7280",
+    fontWeight: "500",
+    textAlign: "center",
   },
   statDivider: {
     width: 1,
     height: 40,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: "#e5e7eb",
     marginHorizontal: 16,
   },
   section: {
@@ -223,85 +223,85 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   sectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 16,
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#374151',
+    fontWeight: "600",
+    color: "#374151",
     marginLeft: 8,
   },
   notificationCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 4,
     elevation: 2,
   },
   notificationHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 12,
   },
   timeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   timeText: {
     fontSize: 20,
-    fontWeight: '700',
-    color: '#1f2937',
+    fontWeight: "700",
+    color: "#1f2937",
     marginLeft: 8,
   },
   notificationDetails: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   daysContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 6,
   },
   dayChip: {
-    backgroundColor: '#fef3f2',
+    backgroundColor: "#fef3f2",
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#fecaca',
+    borderColor: "#fecaca",
   },
   dayText: {
     fontSize: 12,
-    color: '#dc2626',
-    fontWeight: '600',
+    color: "#dc2626",
+    fontWeight: "600",
   },
   frequencyText: {
     fontSize: 14,
-    color: '#6b7280',
-    fontWeight: '500',
+    color: "#6b7280",
+    fontWeight: "500",
   },
   addButton: {
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
     borderRadius: 12,
     padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     borderWidth: 2,
-    borderColor: '#fecaca',
-    borderStyle: 'dashed',
+    borderColor: "#fecaca",
+    borderStyle: "dashed",
   },
   addButtonText: {
     fontSize: 16,
-    color: '#ff6b6b',
-    fontWeight: '600',
+    color: "#ff6b6b",
+    fontWeight: "600",
     marginLeft: 8,
   },
   recentPhotos: {
@@ -309,36 +309,36 @@ const styles = StyleSheet.create({
   },
   photoPreview: {
     marginRight: 12,
-    alignItems: 'center',
+    alignItems: "center",
   },
   photoPlaceholder: {
     width: 80,
     height: 80,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: "#f3f4f6",
     borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 8,
   },
   photoDate: {
     fontSize: 12,
-    color: '#6b7280',
-    fontWeight: '500',
+    color: "#6b7280",
+    fontWeight: "500",
   },
   motivationCard: {
-    backgroundColor: '#fff7ed',
+    backgroundColor: "#fff7ed",
     marginHorizontal: 24,
     marginBottom: 32,
     borderRadius: 16,
     padding: 20,
     borderWidth: 1,
-    borderColor: '#fed7aa',
+    borderColor: "#fed7aa",
   },
   motivationText: {
     fontSize: 16,
-    color: '#ea580c',
-    fontWeight: '600',
-    textAlign: 'center',
+    color: "#ea580c",
+    fontWeight: "600",
+    textAlign: "center",
     lineHeight: 24,
   },
 });
