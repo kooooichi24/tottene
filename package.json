@@ -10,6 +10,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "expo lint",
+    "lint:fix": "expo lint --fix",
     "device:create": "eas device:create",
     "build:ios:simulator": "eas build --platform ios --profile ios-simulator",
     "build:ios:development": "eas build --platform ios --profile development",
