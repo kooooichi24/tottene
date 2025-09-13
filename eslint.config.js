@@ -1,9 +1,9 @@
-const { defineConfig } = require('eslint/config');
-const universeConfig = require('eslint-config-universe/flat/default');
+const { defineConfig } = require("eslint/config");
+const universeConfig = require("eslint-config-universe/flat/default");
 
 module.exports = defineConfig([
   universeConfig,
   {
-    ignores: ['dist/*', 'node_modules/*'],
-  }
+    ignores: ["dist/*", "node_modules/*"],
+  },
 ]);
