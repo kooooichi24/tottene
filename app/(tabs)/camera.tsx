@@ -7,14 +7,7 @@ import {
   Heart,
 } from "lucide-react-native";
 import React, { useState, useRef, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Animated,
-  Alert,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function CameraScreen() {
@@ -23,7 +16,6 @@ export default function CameraScreen() {
   const [timeLeft, setTimeLeft] = useState(120); // 2 minutes in seconds
   const [isActive, setIsActive] = useState(false);
   const cameraRef = useRef<CameraView>(null);
-  const pulseAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -39,33 +31,6 @@ export default function CameraScreen() {
 
     return () => clearInterval(interval);
   }, [isActive, timeLeft]);
-
-  useEffect(() => {
-    // Pulse animation for capture button
-    const pulse = Animated.loop(
-      Animated.sequence([
-        Animated.timing(pulseAnim, {
-          toValue: 1.1,
-          duration: 1000,
-          useNativeDriver: true,
-        }),
-        Animated.timing(pulseAnim, {
-          toValue: 1,
-          duration: 1000,
-          useNativeDriver: true,
-        }),
-      ]),
-    );
-
-    if (isActive) {
-      pulse.start();
-    } else {
-      pulse.stop();
-      pulseAnim.setValue(1);
-    }
-
-    return () => pulse.stop();
-  }, [isActive]);
 
   if (!permission) {
     return (
@@ -167,19 +132,14 @@ export default function CameraScreen() {
                   <RotateCcw size={24} color="#ffffff" strokeWidth={2} />
                 </TouchableOpacity>
 
-                <Animated.View
-                  style={[
-                    styles.captureButtonContainer,
-                    { transform: [{ scale: pulseAnim }] },
-                  ]}
-                >
+                <View style={[styles.captureButtonContainer]}>
                   <TouchableOpacity
                     style={styles.captureButton}
                     onPress={takePicture}
                   >
                     <View style={styles.captureButtonInner} />
                   </TouchableOpacity>
-                </Animated.View>
+                </View>
 
                 <View style={styles.placeholder} />
               </View>
