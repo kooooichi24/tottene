@@ -122,29 +122,34 @@ export default function CameraScreen() {
           </View>
 
           {/* Camera View */}
-          <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
-            <View style={styles.cameraOverlay}>
-              <View style={styles.cameraControls}>
+          <CameraView
+            style={styles.camera}
+            facing={facing}
+            ref={cameraRef}
+            ratio={"16:9"}
+          />
+
+          <View style={styles.cameraOverlay}>
+            <View style={styles.cameraControls}>
+              <TouchableOpacity
+                style={styles.flipButton}
+                onPress={toggleCameraFacing}
+              >
+                <RotateCcw size={24} color="#ffffff" strokeWidth={2} />
+              </TouchableOpacity>
+
+              <View style={[styles.captureButtonContainer]}>
                 <TouchableOpacity
-                  style={styles.flipButton}
-                  onPress={toggleCameraFacing}
+                  style={styles.captureButton}
+                  onPress={takePicture}
                 >
-                  <RotateCcw size={24} color="#ffffff" strokeWidth={2} />
+                  <View style={styles.captureButtonInner} />
                 </TouchableOpacity>
-
-                <View style={[styles.captureButtonContainer]}>
-                  <TouchableOpacity
-                    style={styles.captureButton}
-                    onPress={takePicture}
-                  >
-                    <View style={styles.captureButtonInner} />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={styles.placeholder} />
               </View>
+
+              <View style={styles.placeholder} />
             </View>
-          </CameraView>
+          </View>
         </View>
       )}
     </SafeAreaView>
