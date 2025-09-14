@@ -282,7 +282,6 @@ const styles = StyleSheet.create({
   cameraOverlay: {
     flex: 1,
     justifyContent: "flex-end",
-    paddingBottom: 40,
   },
   cameraControls: {
     flexDirection: "row",
