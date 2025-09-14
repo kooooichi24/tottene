@@ -10,12 +10,20 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+// import { useTabVisibility } from "./_layout";
+
 export default function CameraScreen() {
   const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
+  // const { setIsCameraActive } = useTabVisibility();
   const [timeLeft, setTimeLeft] = useState(120); // 2 minutes in seconds
   const [isActive, setIsActive] = useState(false);
   const cameraRef = useRef<CameraView>(null);
+
+  // Control the tab visibility by the camera active state
+  // useEffect(() => {
+  //   setIsCameraActive(isActive);
+  // }, [isActive, setIsCameraActive]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -244,12 +252,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   timerHeader: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    backgroundColor: "rgba(0, 0, 0)",
+    paddingTop: 50, // ステータスバーの高さ分
     paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingBottom: 16,
+    zIndex: 1000,
   },
   closeButton: {
     width: 40,
@@ -280,8 +294,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cameraOverlay: {
-    flex: 1,
-    justifyContent: "flex-end",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "rgba(0, 0, 0)",
+    paddingTop: 20,
+    paddingBottom: 40, // ナビゲーションバーの高さ分
+    paddingHorizontal: 20,
+    zIndex: 1000,
   },
   cameraControls: {
     flexDirection: "row",
