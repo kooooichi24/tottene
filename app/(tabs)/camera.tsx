@@ -185,13 +185,6 @@ export default function CameraScreen() {
               </View>
             </View>
           </CameraView>
-
-          {/* Encouragement Message */}
-          <View style={styles.encouragementContainer}>
-            <Text style={styles.encouragementText}>
-              素敵な瞬間をお待ちしています 📸
-            </Text>
-          </View>
         </View>
       )}
     </SafeAreaView>
