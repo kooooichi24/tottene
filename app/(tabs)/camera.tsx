@@ -1,44 +1,27 @@
-import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
+import { useCameraPermissions } from "expo-camera";
+import { useRouter } from "expo-router";
+import { Camera as CameraIcon } from "lucide-react-native";
+import React, { useEffect } from "react";
 import {
-  Camera as CameraIcon,
-  RotateCcw,
-  X,
-  Timer,
-  Heart,
-} from "lucide-react-native";
-import React, { useState, useRef, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-// import { useTabVisibility } from "./_layout";
-
 export default function CameraScreen() {
-  const [facing, setFacing] = useState<CameraType>("back");
+  const router = useRouter();
   const [permission, requestPermission] = useCameraPermissions();
-  // const { setIsCameraActive } = useTabVisibility();
-  const [timeLeft, setTimeLeft] = useState(120); // 2 minutes in seconds
-  const [isActive, setIsActive] = useState(false);
-  const cameraRef = useRef<CameraView>(null);
 
-  // Control the tab visibility by the camera active state
-  // useEffect(() => {
-  //   setIsCameraActive(isActive);
-  // }, [isActive, setIsCameraActive]);
+  const isWithinShootingWindow = false;
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-
-    if (isActive && timeLeft > 0) {
-      interval = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
-      }, 1000);
-    } else if (timeLeft === 0) {
-      setIsActive(false);
-      Alert.alert("時間終了", "撮影時間が終了しました。");
+    if (permission && permission.granted && isWithinShootingWindow) {
+      router.push("/(camera-view)");
     }
-
-    return () => clearInterval(interval);
-  }, [isActive, timeLeft]);
+  }, [permission]);
 
   if (!permission) {
     return (
@@ -50,11 +33,14 @@ export default function CameraScreen() {
     );
   }
 
-  if (!permission.granted) {
+  if (
+    permission.status === "undetermined" ||
+    (permission.status === "denied" && permission.canAskAgain)
+  ) {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.permissionContainer}>
-          <Heart size={64} color="#ff6b6b" strokeWidth={1.5} />
+          <CameraIcon size={64} color="#ff6b6b" strokeWidth={1.5} />
           <Text style={styles.permissionTitle}>カメラへのアクセス</Text>
           <Text style={styles.permissionMessage}>
             大切な瞬間を記録するために{"\n"}カメラの使用を許可してください
@@ -70,96 +56,44 @@ export default function CameraScreen() {
     );
   }
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
-  };
+  if (permission.status === "denied" && !permission.canAskAgain) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.permissionContainer}>
+          <Text style={styles.permissionTitle}>カメラへのアクセス</Text>
+          <Text style={styles.permissionMessage}>
+            カメラへのアクセスが拒否されました。設定から許可してください。
+          </Text>
+          <TouchableOpacity
+            style={styles.permissionButton}
+            onPress={() => Linking.openSettings()}
+          >
+            <Text style={styles.permissionButtonText}>設定を開く</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
-  const startSession = () => {
-    setIsActive(true);
-    setTimeLeft(120);
-  };
-
-  const takePicture = async () => {
-    if (cameraRef.current) {
-      try {
-        const photo = await cameraRef.current.takePictureAsync();
-        Alert.alert("撮影完了", "素敵な写真が撮れました！");
-        // Here you would save the photo to local storage
-      } catch (error) {
-        Alert.alert("エラー", "撮影に失敗しました。");
-      }
-    }
-  };
-
-  const toggleCameraFacing = () => {
-    setFacing((current) => (current === "back" ? "front" : "back"));
-  };
+  if (permission.status === "granted" && !isWithinShootingWindow) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.permissionContainer}>
+          <Text style={styles.permissionTitle}>カメラへのアクセス</Text>
+          <Text style={styles.permissionMessage}>
+            カメラへのアクセスが許可されていますが、撮影時間外です。
+          </Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
-      {!isActive ? (
-        <View style={styles.welcomeContainer}>
-          <View style={styles.welcomeContent}>
-            <CameraIcon size={80} color="#ff6b6b" strokeWidth={1.5} />
-            <Text style={styles.welcomeTitle}>撮影の時間です</Text>
-            <Text style={styles.welcomeMessage}>
-              今日の特別な瞬間を{"\n"}記録しませんか？
-            </Text>
-            <TouchableOpacity style={styles.startButton} onPress={startSession}>
-              <Text style={styles.startButtonText}>撮影を開始</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      ) : (
-        <View style={styles.cameraContainer}>
-          {/* Timer Header */}
-          <View style={styles.timerHeader}>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => setIsActive(false)}
-            >
-              <X size={24} color="#ffffff" strokeWidth={2} />
-            </TouchableOpacity>
-            <View style={styles.timerContainer}>
-              <Timer size={20} color="#ffffff" strokeWidth={2} />
-              <Text style={styles.timerText}>{formatTime(timeLeft)}</Text>
-            </View>
-            <View style={styles.placeholder} />
-          </View>
-
-          {/* Camera View */}
-          <CameraView
-            style={styles.camera}
-            facing={facing}
-            ref={cameraRef}
-            ratio={"16:9"}
-          />
-
-          <View style={styles.cameraOverlay}>
-            <View style={styles.cameraControls}>
-              <TouchableOpacity
-                style={styles.flipButton}
-                onPress={toggleCameraFacing}
-              >
-                <RotateCcw size={24} color="#ffffff" strokeWidth={2} />
-              </TouchableOpacity>
-
-              <View style={[styles.captureButtonContainer]}>
-                <TouchableOpacity
-                  style={styles.captureButton}
-                  onPress={takePicture}
-                >
-                  <View style={styles.captureButtonInner} />
-                </TouchableOpacity>
-              </View>
-
-              <View style={styles.placeholder} />
-            </View>
-          </View>
-        </View>
-      )}
+      <View style={styles.loadingContainer}>
+        {/* TODO: add loading indicator */}
+        <Text style={styles.loadingText}>カメラを準備中...</Text>
+      </View>
     </SafeAreaView>
   );
 }
