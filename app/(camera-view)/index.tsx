@@ -10,7 +10,6 @@ export default function CameraViewScreen() {
   const [facing, setFacing] = useState<CameraType>("back");
   const [permission] = useCameraPermissions();
   const [timeLeft, setTimeLeft] = useState(120); // 2 minutes in seconds
-  const [isActive, setIsActive] = useState(false);
   const cameraRef = useRef<CameraView>(null);
 
   useEffect(() => {
@@ -23,27 +22,21 @@ export default function CameraViewScreen() {
   useEffect(() => {
     let interval: NodeJS.Timeout;
 
-    if (isActive && timeLeft > 0) {
+    if (timeLeft > 0) {
       interval = setInterval(() => {
         setTimeLeft((prev) => prev - 1);
       }, 1000);
     } else if (timeLeft === 0) {
-      setIsActive(false);
       Alert.alert("時間終了", "撮影時間が終了しました。");
     }
 
     return () => clearInterval(interval);
-  }, [isActive, timeLeft]);
+  }, [timeLeft]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, "0")}`;
-  };
-
-  const startSession = () => {
-    setIsActive(true);
-    setTimeLeft(120);
   };
 
   const takePicture = async () => {
@@ -64,67 +57,49 @@ export default function CameraViewScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {!isActive ? (
-        <View style={styles.welcomeContainer}>
-          <View style={styles.welcomeContent}>
-            <CameraIcon size={80} color="#ff6b6b" strokeWidth={1.5} />
-            <Text style={styles.welcomeTitle}>撮影の時間です</Text>
-            <Text style={styles.welcomeMessage}>
-              今日の特別な瞬間を{"\n"}記録しませんか？
-            </Text>
-            <TouchableOpacity style={styles.startButton} onPress={startSession}>
-              <Text style={styles.startButtonText}>撮影を開始</Text>
-            </TouchableOpacity>
+      <View style={styles.cameraContainer}>
+        {/* Timer Header */}
+        <View style={styles.timerHeader}>
+          <TouchableOpacity style={styles.closeButton}>
+            <X size={24} color="#ffffff" strokeWidth={2} />
+          </TouchableOpacity>
+          <View style={styles.timerContainer}>
+            <Timer size={20} color="#ffffff" strokeWidth={2} />
+            <Text style={styles.timerText}>{formatTime(timeLeft)}</Text>
           </View>
+          <View style={styles.placeholder} />
         </View>
-      ) : (
-        <View style={styles.cameraContainer}>
-          {/* Timer Header */}
-          <View style={styles.timerHeader}>
+
+        {/* Camera View */}
+        <CameraView
+          style={styles.camera}
+          facing={facing}
+          ref={cameraRef}
+          ratio={"16:9"}
+        />
+
+        <View style={styles.cameraOverlay}>
+          <View style={styles.cameraControls}>
             <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => setIsActive(false)}
+              style={styles.flipButton}
+              onPress={toggleCameraFacing}
             >
-              <X size={24} color="#ffffff" strokeWidth={2} />
+              <RotateCcw size={24} color="#ffffff" strokeWidth={2} />
             </TouchableOpacity>
-            <View style={styles.timerContainer}>
-              <Timer size={20} color="#ffffff" strokeWidth={2} />
-              <Text style={styles.timerText}>{formatTime(timeLeft)}</Text>
+
+            <View style={[styles.captureButtonContainer]}>
+              <TouchableOpacity
+                style={styles.captureButton}
+                onPress={takePicture}
+              >
+                <View style={styles.captureButtonInner} />
+              </TouchableOpacity>
             </View>
+
             <View style={styles.placeholder} />
           </View>
-
-          {/* Camera View */}
-          <CameraView
-            style={styles.camera}
-            facing={facing}
-            ref={cameraRef}
-            ratio={"16:9"}
-          />
-
-          <View style={styles.cameraOverlay}>
-            <View style={styles.cameraControls}>
-              <TouchableOpacity
-                style={styles.flipButton}
-                onPress={toggleCameraFacing}
-              >
-                <RotateCcw size={24} color="#ffffff" strokeWidth={2} />
-              </TouchableOpacity>
-
-              <View style={[styles.captureButtonContainer]}>
-                <TouchableOpacity
-                  style={styles.captureButton}
-                  onPress={takePicture}
-                >
-                  <View style={styles.captureButtonInner} />
-                </TouchableOpacity>
-              </View>
-
-              <View style={styles.placeholder} />
-            </View>
-          </View>
         </View>
-      )}
+      </View>
     </SafeAreaView>
   );
 }
@@ -132,7 +107,7 @@ export default function CameraViewScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fafafa",
+    backgroundColor: "black",
   },
   welcomeContainer: {
     flex: 1,
