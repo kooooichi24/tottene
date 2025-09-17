@@ -1,6 +1,6 @@
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
 import { useRouter } from "expo-router";
-import { Camera as CameraIcon, RotateCcw, X, Timer } from "lucide-react-native";
+import { RotateCcw, X, Timer } from "lucide-react-native";
 import React, { useState, useRef, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
