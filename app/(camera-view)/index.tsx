@@ -1,6 +1,6 @@
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
 import { useRouter } from "expo-router";
-import { RotateCcw, X, Timer } from "lucide-react-native";
+import { RotateCcw, Timer } from "lucide-react-native";
 import React, { useState, useRef, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -60,9 +60,6 @@ export default function CameraViewScreen() {
       <View style={styles.cameraContainer}>
         {/* Timer Header */}
         <View style={styles.timerHeader}>
-          <TouchableOpacity style={styles.closeButton}>
-            <X size={24} color="#ffffff" strokeWidth={2} />
-          </TouchableOpacity>
           <View style={styles.timerContainer}>
             <Timer size={20} color="#ffffff" strokeWidth={2} />
             <Text style={styles.timerText}>{formatTime(timeLeft)}</Text>
@@ -156,21 +153,13 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0)",
     paddingTop: 50, // ステータスバーの高さ分
     paddingHorizontal: 20,
     paddingBottom: 16,
     zIndex: 1000,
-  },
-  closeButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    justifyContent: "center",
-    alignItems: "center",
   },
   timerContainer: {
     flexDirection: "row",
