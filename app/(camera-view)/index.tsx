@@ -67,7 +67,6 @@ export default function CameraViewScreen() {
             <Timer size={20} color="#ffffff" strokeWidth={2} />
             <Text style={styles.timerText}>{formatTime(timeLeft)}</Text>
           </View>
-          <View style={styles.placeholder} />
         </View>
 
         {/* Camera View */}
@@ -186,9 +185,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
     marginLeft: 8,
-  },
-  placeholder: {
-    width: 40,
   },
   camera: {
     flex: 1,
