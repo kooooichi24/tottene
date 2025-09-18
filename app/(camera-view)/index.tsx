@@ -75,13 +75,6 @@ export default function CameraViewScreen() {
 
       <View style={styles.cameraOverlay}>
         <View style={styles.cameraControls}>
-          <TouchableOpacity
-            style={styles.flipButton}
-            onPress={toggleCameraFacing}
-          >
-            <RotateCcw size={24} color="#ffffff" strokeWidth={2} />
-          </TouchableOpacity>
-
           <View style={[styles.captureButtonContainer]}>
             <TouchableOpacity
               style={styles.captureButton}
@@ -91,7 +84,12 @@ export default function CameraViewScreen() {
             </TouchableOpacity>
           </View>
 
-          <View style={styles.placeholder} />
+          <TouchableOpacity
+            style={styles.flipButton}
+            onPress={toggleCameraFacing}
+          >
+            <RotateCcw size={24} color="#ffffff" strokeWidth={2} />
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
